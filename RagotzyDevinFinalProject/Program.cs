@@ -108,11 +108,20 @@ namespace RagotzyDevinFinalProject {
                             case 4:
                                 Console.WriteLine("Enter a name to search customers by");
                                 string person = Console.ReadLine();
-                                decimal[] payment = loanCalc.CalcPaymentInfo(person);
-                                if (payment == null) {
-                                    Console.WriteLine(fmtIt.Error("No customer found press enter"));
-                                    Console.ReadLine();
-                                    break;
+                                
+                                Console.WriteLine("Enter the rate customer must pay");
+                                string rateStr = Console.ReadLine();
+                                try {
+                                    decimal rateDec = decimal.Parse(rateStr);
+                                    (object[] payInfo, object[] custLoan) = loanCalc.CalcPaymentInfo(person, rateDec);
+                                    Console.WriteLine(fmtIt.Display(payInfo, custLoan));
+                                    if (custLoan == null) {
+                                        Console.WriteLine(fmtIt.Error("No customer found press enter"));
+                                        Console.ReadLine();
+                                        break;
+                                    }
+                                } catch (Exception err) {
+                                    Console.WriteLine(err.ToString() + fmtIt.Error("You must enter a decimal for the rate"));
                                 }
 
                                 Console.WriteLine(EOL._ + "Press Enter to continue");
