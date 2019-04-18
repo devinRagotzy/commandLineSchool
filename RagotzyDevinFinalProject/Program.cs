@@ -108,8 +108,8 @@ namespace RagotzyDevinFinalProject {
                             case 4:
                                 Console.WriteLine("Enter a name to search customers by");
                                 string person = Console.ReadLine();
-                                object[] customer = loanCalc.Search(person);
-                                if (customer == null) {
+                                decimal[] payment = loanCalc.CalcPaymentInfo(person);
+                                if (payment == null) {
                                     Console.WriteLine(fmtIt.Error("No customer found press enter"));
                                     Console.ReadLine();
                                     break;

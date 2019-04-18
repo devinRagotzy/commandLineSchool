@@ -23,19 +23,31 @@ namespace RagotzyDevinFinalProject {
             this._loanArray = loans;
         }
 
-        public void Search(string want) {
+        private object[] BSearch(int num, string want) {
             object[] person = new object[3];
-            bool found = false;
-            for (int i = 0; i < this._loanArray.GetLength(0); i++) {
-                string curr = (string)this._loanArray[i, 0];
-                if (curr == want) {
-                    found = true;
-                    for (int j = 0; j < 3; j++) {
-                        person[j] = this._loanArray.GetValue(i, j);
+            int left = 0;
+            int right = num - 1;
+            while (left <= right) {
+                int mid = (left + right) / 2;
+                if (this._loanArray[mid, 0].ToString().CompareTo(want) < 0) {
+                    left = mid + 1;
+                } else if (this._loanArray[mid, 0].ToString().CompareTo(want) > 0) {
+                    right = mid - 1;
+                } else {
+                    for (int i = 0; i < 3; i++) {
+                        person[i] = this._loanArray.GetValue(mid, i);
                     }
+                    return this._personArray;
                 }
             }
-            this._personArray = found ? person : null;
+            return null;
+        }
+
+        public decimal[] CalcPaymentInfo(string person) {
+            object[] cust = this.BSearch(this._loanArray.GetLength(0) - 1, person);
+            if (cust == null) return null;
+            return new decimal[3] { 1.1m, 1.2m, 1.3m };
+
         }
     }
 }
