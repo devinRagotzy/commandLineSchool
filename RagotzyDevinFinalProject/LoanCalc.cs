@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace RagotzyDevinFinalProject {
     class LoanCalculator {
@@ -52,7 +48,8 @@ namespace RagotzyDevinFinalProject {
             if (cust == null) return (null, null);
 
             decimal loanInterest = (decimal)cust[1] * rate * (decimal)cust[2]; 
-            decimal totalAmount = (decimal)cust[1] + loanInterest; 
+            decimal totalAmount = (decimal)cust[1] + loanInterest;
+            int mod = (int)totalAmount % ((int)cust[2] * 12);
             decimal monthlyPayment = totalAmount / ((decimal)cust[2] * 12);
             return (new object[] { loanInterest, totalAmount, monthlyPayment }, cust);
 

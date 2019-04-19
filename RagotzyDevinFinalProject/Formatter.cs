@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 // colors strings with escape codes for terminal
 using Crayon;
 
@@ -57,15 +54,15 @@ namespace RagotzyDevinFinalProject {
                         msg += Output.FromRgb(r, g, b).Text(temp.PadRight(18));
                     } else if (j == 1){
                         decimal temp = (decimal)arr[i, j];
-                        msg += temp.ToString("c").PadLeft(9);
+                        msg += temp.ToString("c").PadLeft(11);
                     } else {
                         decimal temp = (decimal)arr[i, j];
-                        msg += temp.ToString().PadLeft(10);
+                        msg += temp.ToString().PadLeft(9);
                     }
                 }
-                msg += EOL._ + "Press Enter to continue";
+                msg += EOL._;
             }
-            return msg;
+            return msg + "Press Enter to continue" + EOL._;
         }
 
         // search display 
@@ -73,9 +70,9 @@ namespace RagotzyDevinFinalProject {
             String msg = Output.Blue().Bold().Text("Here is the list of all customers who have that size loan") + EOL._
                 + Output.Green().Underline().Text("Name") + EOL._;
             foreach (string name in names) {
-                msg += name + EOL._ + "Press Enter to continue";
+                msg += name + EOL._;
             }
-            return msg;
+            return msg + "Press Enter to continue" + EOL._;
         }
 
         // payment info display

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 
@@ -23,12 +20,9 @@ namespace RagotzyDevinFinalProject {
         private void OpenFile(string fileLocation) {
             try {
                 StreamReader inputFile = new StreamReader(fileLocation);
-                // initialize the array with our file info
-                string infoStr = inputFile.ReadToEnd();
-                int outerSize = infoStr.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Length;
-                int innerSize = infoStr.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)[0]
-                    .Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries).Length;
-                this._personInfoArray = new object[outerSize, innerSize];
+                // I could read the file and then initialize the array then do nested for loops
+                // when i read to the end to get length its endofstream 
+                this._personInfoArray = new object[8, 3];
                 int index = 0;
                 while (!inputFile.EndOfStream) {
                     string chunk = inputFile.ReadLine();
@@ -48,6 +42,7 @@ namespace RagotzyDevinFinalProject {
             }
         }
 
+        // search for decimal amount option 1 in case statement
         public List<string> Search(decimal want) {
             List<string> collected = new List<string>();
             for (int i = 0; i < this._personInfoArray.GetLength(0); i++) {
@@ -63,7 +58,7 @@ namespace RagotzyDevinFinalProject {
             string pivot = (string)arr[numEle, 0];
             int idx = low - 1;
             for (int j = low; j < numEle; j++) {
-                // 1 if second is larger -1 if first
+                // 1 if second is larger -1 if first is smaller
                 int ifSmaller = string.Compare((string)arr[j, 0], pivot);
                 if (ifSmaller == -1) {
                     idx++;
@@ -111,6 +106,7 @@ namespace RagotzyDevinFinalProject {
             return idx + 1;
         }
 
+        // sorts for first name
         public void QSort(int low, int high) {
             int numEle = high - 1;
             if (low < numEle) {
@@ -118,9 +114,9 @@ namespace RagotzyDevinFinalProject {
                 // the splitInx is the pivot and is swapped with all elements larger 
                 // than it moved to the left of the array
                 int splitInx = this.SplitQSort(this._personInfoArray, low, numEle);
-                // checks elements to the left
+                // recursivly checks elements to the left
                 this.QSort(low, splitInx - 1);
-                // recursibly take large 'half' and
+                // recursivly take large 'half' and swap elements
                 this.QSort(splitInx + 1, numEle);
             }
         }
@@ -188,9 +184,9 @@ namespace RagotzyDevinFinalProject {
                 // the splitInx is the pivot and is swapped with all elements larger 
                 // than it moved to the left of the array
                 int splitInx = this.SplitQSort(this._personInfoArray, low, numEle, lastName);
-                // checks elements to the left
+                // recursivly checks elements to the left
                 this.QSort(low, splitInx - 1, lastName);
-                // recursibly take large 'half' and
+                // recursivly checks the elements to right of pivot
                 this.QSort(splitInx + 1, numEle, lastName);
             }
         }
