@@ -1,0 +1,9 @@
+Paulie Pauper, 4500.00, 2 
+I.M. Debt,  10500.00, 10
+Lawrence Loaner, 2000.00, 1
+Bob Bankrupt, 10500.00, 7.5
+Barb Broke, 2000.00, 3
+Shorty Shortsight, 3500.00, 4.5
+Poor Pepper,  8000.00, 1
+Sally Saddly,  4500.00, 6
+

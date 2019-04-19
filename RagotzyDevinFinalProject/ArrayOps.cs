@@ -17,18 +17,22 @@ namespace RagotzyDevinFinalProject {
         }
 
         public ArrayOperations() {
-            this.OpenFile(Environment.CurrentDirectory + "\\loans.txt");
+            this.OpenFile(Environment.CurrentDirectory + "..\\..\\..\\..\\loans.txt");
         }
 
         private void OpenFile(string fileLocation) {
             try {
                 StreamReader inputFile = new StreamReader(fileLocation);
                 // initialize the array with our file info
-                this._personInfoArray = new object[8, 3];
+                string infoStr = inputFile.ReadToEnd();
+                int outerSize = infoStr.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Length;
+                int innerSize = infoStr.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)[0]
+                    .Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries).Length;
+                this._personInfoArray = new object[outerSize, innerSize];
                 int index = 0;
                 while (!inputFile.EndOfStream) {
                     string chunk = inputFile.ReadLine();
-                    string[] infoArr = chunk.Split(',');
+                    string[] infoArr = chunk.Split(new string[] { ", "}, StringSplitOptions.RemoveEmptyEntries);
                     for (int i = 0; i < infoArr.Length; i++) {
                         if (i == 0) {
                             this._personInfoArray[index, i] = (string)infoArr[i];
