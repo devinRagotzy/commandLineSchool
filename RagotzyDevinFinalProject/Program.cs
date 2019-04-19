@@ -62,7 +62,6 @@ namespace RagotzyDevinFinalProject {
                             // Display
                             case 0:
                                 Console.WriteLine(fmtIt.Display(loans.LoanInfo));
-                                Console.WriteLine("Press Enter to continue");
                                 Console.ReadLine();
                                 break;
                             // search
@@ -74,18 +73,17 @@ namespace RagotzyDevinFinalProject {
                                     List<string> names = loans.Search(amtDec);
                                     // none found
                                     if (names.Count < 1) {
-                                        Console.WriteLine(fmtIt.Error("No amount found press enter"));
+                                        Console.WriteLine(fmtIt.Error("No customer found press enter"));
                                         Console.ReadLine();
                                         break;
                                     }
                                     // TODO
-                                    foreach (string name in names) {
-                                        Console.WriteLine(name);
-                                    }
-                                } catch (Exception err) {
-                                    Console.WriteLine(err.ToString() + fmtIt.Error("You must enter a numeric amount ex 100.00"));
+                                    Console.Write(fmtIt.Display(names));
+                                } catch {
+                                    Console.WriteLine(fmtIt.Error("You must enter a numeric amount ex 100.00"));
+                                    Console.ReadLine();
+                                    break;
                                 }
-                                Console.WriteLine(EOL._ + "Press Enter to continue");
                                 Console.ReadLine();
                                 break;
                             // sort first name
@@ -93,7 +91,6 @@ namespace RagotzyDevinFinalProject {
                                 loans.QSort(0, loans.LoanInfo.GetLength(0));
                                 // CHECK
                                 Console.Write(fmtIt.Display(loans.LoanInfo));
-                                Console.WriteLine(EOL._ + "Press Enter to continue");
                                 Console.ReadLine();
                                 break;
                             // sort last name
@@ -101,7 +98,6 @@ namespace RagotzyDevinFinalProject {
                                 loans.QSort(0, loans.LoanInfo.GetLength(0), true);
                                 // CHECK
                                 Console.Write(fmtIt.Display(loans.LoanInfo));
-                                Console.WriteLine(EOL._ + "Press Enter to continue");
                                 Console.ReadLine();
                                 break;
                             // Calc payments
@@ -114,17 +110,18 @@ namespace RagotzyDevinFinalProject {
                                 try {
                                     decimal rateDec = decimal.Parse(rateStr);
                                     (object[] payInfo, object[] custLoan) = loanCalc.CalcPaymentInfo(person, rateDec);
-                                    Console.WriteLine(fmtIt.Display(payInfo, custLoan));
                                     if (custLoan == null) {
                                         Console.WriteLine(fmtIt.Error("No customer found press enter"));
                                         Console.ReadLine();
                                         break;
                                     }
-                                } catch (Exception err) {
-                                    Console.WriteLine(err.ToString() + fmtIt.Error("You must enter a decimal for the rate"));
+                                    Console.WriteLine(fmtIt.Display(payInfo, custLoan));
+                                } catch {
+                                    Console.WriteLine(fmtIt.Error("You must enter a decimal for the rate"));
+                                    Console.ReadLine();
+                                    break;
                                 }
 
-                                Console.WriteLine(EOL._ + "Press Enter to continue");
                                 Console.ReadLine();
                                 break;
                             default:
