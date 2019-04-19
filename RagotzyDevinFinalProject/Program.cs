@@ -126,6 +126,7 @@ namespace RagotzyDevinFinalProject {
                                     List<string> names = loans.Search(amtDec);
                                     // none found
                                     if (names.Count < 1) {
+                                        Console.Clear();
                                         Console.WriteLine(fmtIt.Error("No customer found press enter"));
                                         Console.ReadLine();
                                         break;
@@ -162,6 +163,7 @@ namespace RagotzyDevinFinalProject {
                                 string rateStr = Console.ReadLine();
                                 try {
                                     decimal rateDec = decimal.Parse(rateStr);
+                                    Console.Clear();
                                     (object[] payInfo, object[] custLoan) = loanCalc.CalcPaymentInfo(person, rateDec);
                                     if (custLoan == null) {
                                         Console.WriteLine(fmtIt.Error("No customer found press enter"));
@@ -169,7 +171,7 @@ namespace RagotzyDevinFinalProject {
                                         break;
                                     }
                                     Console.WriteLine(fmtIt.Display(payInfo, custLoan));
-                                } catch {
+                                } catch (Exception err) {
                                     Console.WriteLine(fmtIt.Error("You must enter a decimal for the rate"));
                                     Console.ReadLine();
                                     break;

@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 
 namespace RagotzyDevinFinalProject {
     class LoanCalculator {
@@ -43,16 +43,15 @@ namespace RagotzyDevinFinalProject {
         // returns a tuple
         // the 0 index is the calculated loan info the second is original customer info
         public (object[], object[]) CalcPaymentInfo(string person, decimal rate) {
-            object[] cust = this.BSearch(this._loanArray.GetLength(0) - 1, person);
+            object[] cust = this.BSearch(this._loanArray.GetLength(0), person);
 
             if (cust == null) return (null, null);
 
             decimal loanInterest = (decimal)cust[1] * rate * (decimal)cust[2]; 
             decimal totalAmount = (decimal)cust[1] + loanInterest;
-            int mod = (int)totalAmount % ((int)cust[2] * 12);
+            int mod = Convert.ToInt32(totalAmount) % (Convert.ToInt32(cust[2]) * 12);
             decimal monthlyPayment = totalAmount / ((decimal)cust[2] * 12);
             return (new object[] { loanInterest, totalAmount, monthlyPayment }, cust);
-
         }
     }
 }
