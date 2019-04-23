@@ -42,16 +42,27 @@ namespace RagotzyDevinFinalProject {
 
         // returns a tuple
         // the 0 index is the calculated loan info the second is original customer info
-        public (object[], object[]) CalcPaymentInfo(string person, decimal rate) {
+        public Payment CalcPaymentInfo(string person, decimal rate) {
             object[] cust = this.BSearch(this._loanArray.GetLength(0), person);
 
-            if (cust == null) return (null, null);
+            if (cust == null) return null;
 
+            decimal numPays = (decimal)cust[2] * 12;
             decimal loanInterest = (decimal)cust[1] * rate * (decimal)cust[2]; 
             decimal totalAmount = (decimal)cust[1] + loanInterest;
-            int mod = Convert.ToInt32(totalAmount) % (Convert.ToInt32(cust[2]) * 12);
-            decimal monthlyPayment = totalAmount / ((decimal)cust[2] * 12);
-            return (new object[] { loanInterest, totalAmount, monthlyPayment }, cust);
+            int left = Convert.ToInt32(totalAmount) % (Convert.ToInt32(cust[2]) * 12);
+            // decimal monthlyPayment = totalAmount / ((decimal)cust[2] * 12);
+            int monthlyPayment = Convert.ToInt32(totalAmount) / (Convert.ToInt32(cust[2]) * 12);
+
+            object[] pays = new object[] {
+                loanInterest,
+                totalAmount,
+                monthlyPayment,
+                left,
+                rate,
+                numPays
+            };
+            return new Payment(pays, cust);
         }
     }
 }

@@ -27,7 +27,7 @@ using System.Collections.Generic;
  *  Properties:
  *      selectedIndexInt -
  *          used to track users selection 
- *      Cursorvisible - 
+ *      CursorVisible - 
  *          since i want the menu to be used with arrow keys the cursor only shows up when typing
  *          is required.
  *      ConsoleKey - 
@@ -60,21 +60,21 @@ using System.Collections.Generic;
  *              be normalized out to a number between 0 and 256
  *      LoanCalc -
  *          BSearch -
- *              split the array in half until you find your match, does not work if unsorted
+ *              binary search splits the array in half until you find your match, does not work if unsorted
  *          CalcPaymentInfo -
  *              calculates interest total, total due and montly payments
  *      ArrayOps -
  *          Constructor - 
  *              is important because it opens the file and initializes the array with the contents of the file
  *          Qsort -
- *              
+ *              sorts the array by first name and last name, overloaded, uses quicksort algorithm 
  *          Search - 
  *              just a single for loop to find if there is a matching loan amount and adds it to a list
  *  Extras:
- *      Imported a package called Crayon to color the console more easily the class Output is
- *      how i interact with it. It uses chainable methods to add color or styles to a string with ascii.
- *      Using a sine i was able to get rgb values to increment and decriment in a uniform way
- *      so i could color the text output like a rainbow yay!! 
+ *      Imported a package called Crayon to color the console more easily its main class, Output is
+ *      how i interact with it. It uses chainable methods to add color or styles to a string with ascii 
+ *      color codes. Using a sine wave and the sine func i was able to get rgb values to increment 
+ *      and decriment in a uniform way so i could color the text output like a rainbow yay!! 
 ******************************************************************************/
 namespace RagotzyDevinFinalProject {
     class Program {
@@ -142,14 +142,14 @@ namespace RagotzyDevinFinalProject {
                                 break;
                             // sort first name
                             case 2:
-                                loans.QSort(0, loans.LoanInfo.GetLength(0));
+                                loans.QSort(loans.LoanInfo, 0, loans.LoanInfo.GetLength(0) - 1);
                                 // CHECK
                                 Console.Write(fmtIt.Display(loans.LoanInfo));
                                 Console.ReadLine();
                                 break;
                             // sort last name
                             case 3:
-                                loans.QSort(0, loans.LoanInfo.GetLength(0), true);
+                                loans.QSort(loans.LoanInfo, 0, loans.LoanInfo.GetLength(0) - 1, true);
                                 // CHECK
                                 Console.Write(fmtIt.Display(loans.LoanInfo));
                                 Console.ReadLine();
@@ -162,21 +162,20 @@ namespace RagotzyDevinFinalProject {
                                 Console.WriteLine("Enter the rate customer must pay");
                                 string rateStr = Console.ReadLine();
                                 try {
-                                    decimal rateDec = decimal.Parse(rateStr);
                                     Console.Clear();
-                                    (object[] payInfo, object[] custLoan) = loanCalc.CalcPaymentInfo(person, rateDec);
-                                    if (custLoan == null) {
+                                    decimal rateDec = decimal.Parse(rateStr);
+                                    Payment payment = loanCalc.CalcPaymentInfo(person, rateDec);
+                                    if (payment == null) {
                                         Console.WriteLine(fmtIt.Error("No customer found press enter"));
                                         Console.ReadLine();
                                         break;
                                     }
-                                    Console.WriteLine(fmtIt.Display(payInfo, custLoan));
-                                } catch (Exception err) {
+                                    Console.WriteLine(fmtIt.Display(payment));
+                                } catch {
                                     Console.WriteLine(fmtIt.Error("You must enter a decimal for the rate"));
                                     Console.ReadLine();
                                     break;
                                 }
-
                                 Console.ReadLine();
                                 break;
                             default:

@@ -62,7 +62,7 @@ namespace RagotzyDevinFinalProject {
                 }
                 msg += EOL._;
             }
-            return msg + "Press Enter to continue" + EOL._;
+            return msg + EOL._ + "Press Enter to continue" + EOL._;
         }
 
         // search display 
@@ -72,29 +72,41 @@ namespace RagotzyDevinFinalProject {
             foreach (string name in names) {
                 msg += name + EOL._;
             }
-            return msg + "Press Enter to continue" + EOL._;
+            return msg + EOL._ + "Press Enter to continue" + EOL._;
         }
 
         // payment info display
-        public String Display(object[] payInfo, object[] loanInfo) {
-            // initialize so we can toString currency the decimals and keep everthing short
-            string name = (string)loanInfo[0];
-            decimal lIntrest = Convert.ToDecimal(payInfo[0]);
-            decimal total = Convert.ToDecimal(payInfo[1]);
-            decimal mPay = Convert.ToDecimal(payInfo[2]);
-            String msg =
-                Output.Blue().Bold().Text($"Here is all the payment information about {Output.Yellow().Text((string)loanInfo[0])} we could find") + EOL._
+        public String Display(Payment pay) {
+            string msg =
+                Output.Blue().Bold().Text($"Here is all the payment information about {Output.Yellow().Text(pay.Name)} we could find") + EOL._
 
                 + Output.White().Underline().Text("Name".PadRight(15) + "Loan Interest".PadLeft(2)
-                    + "Total Due".PadLeft(14) + "Montly Payment".PadLeft(16)) + EOL._
+                    + "Total Due".PadLeft(14) + "Annual Interest".PadLeft(18)) + EOL._
 
-                + Output.Green().Text(name.PadRight(15) + lIntrest.ToString("c").PadLeft(13)
-                    + total.ToString("c").PadLeft(14) + mPay.ToString("c").PadLeft(16));
+                + Output.Green().Text(pay.Name.PadRight(15) + pay.LoanInterest.ToString("c").PadLeft(13)
+                    + pay.TotalAmount.ToString("c").PadLeft(14) + pay.Rate.ToString("##%").PadLeft(18)) + EOL._
+                    + "Month Number" + "Payment".PadLeft(11) + "Amount Left".PadLeft(14) + EOL._;
+            int amtLeft = (int)pay.TotalAmount;
+            for (int i = 0; i < (int)pay.NumPayments; i++)
+            {
+                if (i+1 == pay.NumPayments)
+                {
+                    amtLeft -= (pay.MonthlyPayment + pay.AmountLeft);
+                    msg += $"month {i + 1}:".PadRight(14) + $"{(pay.MonthlyPayment + pay.AmountLeft).ToString("c")}"
+                        + $"{amtLeft.ToString("c")}   {pay.AmountLeft.ToString()}".PadLeft(14) + EOL._;
+                }
+                else
+                {
+                    amtLeft -= pay.MonthlyPayment;
+                    msg += $"month {i + 1}:".PadRight(16) + $"{pay.MonthlyPayment.ToString("c")}"
+                        + $"{amtLeft.ToString("c")}".PadLeft(14) + EOL._;
+                }
+            }
             return msg + EOL._ + "Press Enter to continue";
         }
 
         public String Error(string msg) {
-            return Output.Bold().Red().Text(msg) + EOL._ + "Press Enter to continue";
+            return Output.Bold().Red().Text(msg) + EOL._ + EOL._ + "Press Enter to continue";
         }
 
         // uses the index and a sine wave to create incremental rgb values (make a rainbow!!!)

@@ -51,6 +51,7 @@
     <Compile Include="ArrayOps.cs" />
     <Compile Include="Formatter.cs" />
     <Compile Include="LoanCalc.cs" />
+    <Compile Include="Payment.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -54,140 +54,113 @@ namespace RagotzyDevinFinalProject {
             return collected;
         }
 
-        private int SplitQSort(object[,] arr, int low, int numEle) {
-            string pivot = (string)arr[numEle, 0];
-            int idx = low - 1;
-            for (int j = low; j < numEle; j++) {
-                // 1 if second is larger -1 if first is smaller
-                int ifSmaller = string.Compare((string)arr[j, 0], pivot);
-                if (ifSmaller == -1) {
+        private int Partition(object[,] arr, int left, int right) {
+            string pivot = arr[right, 0].ToString().Split(' ')[0].Trim();
+            int idx = left - 1;
+            for (int j = left; j < arr.GetLength(0) - 1; j++) {
+                if (arr[j, 0].ToString().CompareTo(pivot) < 0) {
                     idx++;
-                    // temp = arr[idx]
-                    object[] first = new object[3];
+                    // temp = arr[right]
+                    object[] temp = new object[3];
                     for (int i = 0; i < 3; i++) {
-                        if (i == 0) {
-                            first[i] = (string)arr.GetValue(idx, i);
-                        } else {
-                            first[i] = (decimal)arr.GetValue(idx, i);
-                        }
+                        temp[i] = arr[idx, i];
                     }
-                    // arr[idx] = arr[j]
+                    // arr[right] = arr[left]
                     for (int i = 0; i < 3; i++) {
-                        arr.SetValue(arr.GetValue(j, i), idx, i);
+                        arr[idx, i] = arr[j, i];
+                        //arr.SetValue(arr.GetValue(left, i), right, i);
                     }
-                    // arr[j] = temp;
+                    // arr[left] = temp;
                     for (int i = 0; i < 3; i++) {
-                        arr.SetValue(first[i], j, i);
+                        arr[j, i] = temp[i];
+                        //arr.SetValue(temp[i], left, i);
                     }
                 }
             }
-
-            // int temp1 = arr[idx + 1];       
-            object[] temp = new object[3];
+            // temp = arr[right]
+            object[] temp1 = new object[3];
             for (int i = 0; i < 3; i++) {
-                if (i == 0) {
-                    temp[i] = (string)arr.GetValue(idx + 1, i);
-                } else {
-                    temp[i] = (decimal)arr.GetValue(idx + 1, i);
-                }
+                temp1[i] = arr[idx + 1, i];
             }
-
-            // arr[idx + 1] = arr[numEle];
+            // arr[right] = arr[left]
             for (int i = 0; i < 3; i++) {
-                arr.SetValue(arr.GetValue(numEle, i), idx + 1, i);
+                arr[idx + 1, i] = arr[right, i];
+                //arr.SetValue(arr.GetValue(left, i), right, i);
             }
-
-            // arr[numEle] = temp1;
+            // arr[left] = temp;
             for (int i = 0; i < 3; i++) {
-                arr.SetValue(temp[i], numEle, i);
+                arr[right, i] = temp1[i];
+                //arr.SetValue(temp[i], left, i);
             }
-            
-
             return idx + 1;
         }
 
         // sorts for first name
-        public void QSort(int low, int high) {
-            int numEle = high - 1;
-            if (low < numEle) {
+        public void QSort(object[,] arr, int left, int right) {
+            if (left < right) {
                 // move element by element moving pivot by recursivly calling QSort
                 // the splitInx is the pivot and is swapped with all elements larger 
                 // than it moved to the left of the array
-                int splitInx = this.SplitQSort(this._personInfoArray, low, numEle);
+                int pivot = this.Partition(arr, left, right);
                 // recursivly checks elements to the left
-                this.QSort(low, splitInx - 1);
+                this.QSort(arr, left, pivot - 1);
                 // recursivly take large 'half' and swap elements
-                this.QSort(splitInx + 1, numEle);
+                this.QSort(arr, pivot + 1, right);
             }
         }
 
         // overide for last name sort split and Q sort
-        private int SplitQSort(object[,] arr, int low, int numEle, bool lastName) {
-            string pivot = arr[numEle, 0].ToString().Split(' ')[1].Trim();
-            int idx = low - 1;
-            for (int j = low; j < numEle; j++) {
-                // string to compare pivot to if smaller swaps left
-                string compStr = arr[j, 0].ToString().Split(' ')[1].Trim();
-                // 1 if second is larger -1 if first
-                int ifSmaller = string.Compare(compStr, pivot, true);
-                if (ifSmaller < 0) {
+        private int SplitQSort(object[,] arr, int left, int right, bool lastName) {
+            string pivot = arr[right, 0].ToString().Split(' ')[1].Trim();
+            int idx = left - 1;
+            for (int j = left; j < arr.GetLength(0) - 1; j++) {
+                if (arr[j, 0].ToString().Split(' ')[1].Trim().CompareTo(pivot) < 0) {
                     idx++;
-                    // temp = arr[idx]
-                    object[] first = new object[3];
+                    // temp = arr[right]
+                    object[] temp = new object[3];
                     for (int i = 0; i < 3; i++) {
-                        if (i == 0) {
-                            first[i] = (string)arr.GetValue(idx, i);
-                        } else {
-                            first[i] = (decimal)arr.GetValue(idx, i);
-                        }
+                        temp[i] = arr[idx, i];
                     }
-                    // arr[idx] = arr[j]
+                    // arr[right] = arr[left]
                     for (int i = 0; i < 3; i++) {
-                        arr.SetValue(arr.GetValue(j, i), idx, i);
+                        arr[idx, i] = arr[j, i];
+                        //arr.SetValue(arr.GetValue(left, i), right, i);
                     }
-                    // arr[j] = temp;
+                    // arr[left] = temp;
                     for (int i = 0; i < 3; i++) {
-                        arr.SetValue(first[i], j, i);
+                        arr[j, i] = temp[i];
+                        //arr.SetValue(temp[i], left, i);
                     }
                 }
             }
-
-            // int temp1 = arr[idx + 1];       
-            object[] temp = new object[3];
+            // temp = arr[right]
+            object[] temp1 = new object[3];
             for (int i = 0; i < 3; i++) {
-                if (i == 0) {
-                    temp[i] = (string)arr.GetValue(idx + 1, i);
-                }
-                else {
-                    temp[i] = (decimal)arr.GetValue(idx + 1, i);
-                }
+                temp1[i] = arr[idx + 1, i];
             }
-
-            // arr[idx + 1] = arr[numEle];
+            // arr[right] = arr[left]
             for (int i = 0; i < 3; i++) {
-                arr.SetValue(arr.GetValue(numEle, i), idx + 1, i);
+                arr[idx + 1, i] = arr[right, i];
+                //arr.SetValue(arr.GetValue(left, i), right, i);
             }
-
-            // arr[numEle] = temp1;
+            // arr[left] = temp;
             for (int i = 0; i < 3; i++) {
-                arr.SetValue(temp[i], numEle, i);
+                arr[right, i] = temp1[i];
+                //arr.SetValue(temp[i], left, i);
             }
-
-
             return idx + 1;
         }
 
-        public void QSort(int low, int high, bool lastName) {
-            int numEle = high - 1;
-            if (low < numEle) {
+        public void QSort(object[,] arr, int left, int right, bool lastName) {
+            if (left < right) {
                 // move element by element moving pivot by recursivly calling QSort
                 // the splitInx is the pivot and is swapped with all elements larger 
                 // than it moved to the left of the array
-                int splitInx = this.SplitQSort(this._personInfoArray, low, numEle, lastName);
+                int pivot = this.Partition(arr, left, right);
                 // recursivly checks elements to the left
-                this.QSort(low, splitInx - 1, lastName);
-                // recursivly checks the elements to right of pivot
-                this.QSort(splitInx + 1, numEle, lastName);
+                this.QSort(arr, left, pivot - 1);
+                // recursivly take large 'half' and swap elements
+                this.QSort(arr, pivot + 1, right);
             }
         }
     }
