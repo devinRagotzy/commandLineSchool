@@ -7,7 +7,7 @@ namespace RagotzyDevinFinalProject {
 
     class ArrayOperations {
 
-        private object[,] _personInfoArray;
+        private object[,] _personInfoArray;        
 
         public object[,] LoanInfo {
             get => this._personInfoArray;
@@ -54,44 +54,39 @@ namespace RagotzyDevinFinalProject {
             return collected;
         }
 
-        private int Partition(object[,] arr, int left, int right) {
-            string pivot = arr[right, 0].ToString().Split(' ')[0].Trim();
-            int idx = left - 1;
-            for (int j = left; j < arr.GetLength(0) - 1; j++) {
-                if (arr[j, 0].ToString().CompareTo(pivot) < 0) {
-                    idx++;
-                    // temp = arr[right]
-                    object[] temp = new object[3];
-                    for (int i = 0; i < 3; i++) {
-                        temp[i] = arr[idx, i];
-                    }
-                    // arr[right] = arr[left]
-                    for (int i = 0; i < 3; i++) {
-                        arr[idx, i] = arr[j, i];
-                        //arr.SetValue(arr.GetValue(left, i), right, i);
-                    }
-                    // arr[left] = temp;
-                    for (int i = 0; i < 3; i++) {
-                        arr[j, i] = temp[i];
-                        //arr.SetValue(temp[i], left, i);
-                    }
-                }
-            }
-            // temp = arr[right]
-            object[] temp1 = new object[3];
-            for (int i = 0; i < 3; i++) {
-                temp1[i] = arr[idx + 1, i];
+        private void Swap(object[,] arr, int idx, int j) {
+            int innerSize = arr.GetLength(1);
+
+            object[] temp = new object[innerSize];
+            for (int i = 0; i < innerSize; i++) {
+                temp[i] = arr[idx, i];
             }
             // arr[right] = arr[left]
-            for (int i = 0; i < 3; i++) {
-                arr[idx + 1, i] = arr[right, i];
+            for (int i = 0; i < innerSize; i++) {
+                arr[idx, i] = arr[j, i];
                 //arr.SetValue(arr.GetValue(left, i), right, i);
             }
             // arr[left] = temp;
-            for (int i = 0; i < 3; i++) {
-                arr[right, i] = temp1[i];
+            for (int i = 0; i < innerSize; i++) {
+                arr[j, i] = temp[i];
                 //arr.SetValue(temp[i], left, i);
             }
+        }
+
+        private int Partition(object[,] arr, int left, int right) {
+            int innerSize = arr.GetLength(1);
+
+            string pivot = arr[right, 0].ToString();
+            int idx = left - 1;
+            for (int j = left; j < arr.GetLength(0) - 1; j++) {
+                string firstStr = arr[j, 0].ToString();
+                if (firstStr.CompareTo(pivot) < 0) {
+                    idx++;
+                    
+                    Swap(arr, idx, j);
+                }
+            }
+            Swap(arr, idx + 1, right);
             return idx + 1;
         }
 
@@ -99,12 +94,12 @@ namespace RagotzyDevinFinalProject {
         public void QSort(object[,] arr, int left, int right) {
             if (left < right) {
                 // move element by element moving pivot by recursivly calling QSort
-                // the splitInx is the pivot and is swapped with all elements larger 
-                // than it moved to the left of the array
+                // the pivot is swapped with all elements smaller 
+                // than it, moved to the left of the array
                 int pivot = this.Partition(arr, left, right);
-                // recursivly checks elements to the left
+                // recursivly checks elements to the left of pivot
                 this.QSort(arr, left, pivot - 1);
-                // recursivly take large 'half' and swap elements
+                // guarantees end of recursion
                 this.QSort(arr, pivot + 1, right);
             }
         }
@@ -114,40 +109,13 @@ namespace RagotzyDevinFinalProject {
             string pivot = arr[right, 0].ToString().Split(' ')[1].Trim();
             int idx = left - 1;
             for (int j = left; j < arr.GetLength(0) - 1; j++) {
-                if (arr[j, 0].ToString().Split(' ')[1].Trim().CompareTo(pivot) < 0) {
+                string firstStr = arr[j, 0].ToString();
+                if (firstStr.CompareTo(pivot) < 0) {
                     idx++;
-                    // temp = arr[right]
-                    object[] temp = new object[3];
-                    for (int i = 0; i < 3; i++) {
-                        temp[i] = arr[idx, i];
-                    }
-                    // arr[right] = arr[left]
-                    for (int i = 0; i < 3; i++) {
-                        arr[idx, i] = arr[j, i];
-                        //arr.SetValue(arr.GetValue(left, i), right, i);
-                    }
-                    // arr[left] = temp;
-                    for (int i = 0; i < 3; i++) {
-                        arr[j, i] = temp[i];
-                        //arr.SetValue(temp[i], left, i);
-                    }
+                    Swap(arr, idx, j);
                 }
             }
-            // temp = arr[right]
-            object[] temp1 = new object[3];
-            for (int i = 0; i < 3; i++) {
-                temp1[i] = arr[idx + 1, i];
-            }
-            // arr[right] = arr[left]
-            for (int i = 0; i < 3; i++) {
-                arr[idx + 1, i] = arr[right, i];
-                //arr.SetValue(arr.GetValue(left, i), right, i);
-            }
-            // arr[left] = temp;
-            for (int i = 0; i < 3; i++) {
-                arr[right, i] = temp1[i];
-                //arr.SetValue(temp[i], left, i);
-            }
+            Swap(arr, idx + 1, right);
             return idx + 1;
         }
 

@@ -150,7 +150,6 @@ namespace RagotzyDevinFinalProject {
                             // sort last name
                             case 3:
                                 loans.QSort(loans.LoanInfo, 0, loans.LoanInfo.GetLength(0) - 1, true);
-                                // CHECK
                                 Console.Write(fmtIt.Display(loans.LoanInfo));
                                 Console.ReadLine();
                                 break;
@@ -179,6 +178,23 @@ namespace RagotzyDevinFinalProject {
                                 Console.ReadLine();
                                 break;
                             default:
+                                // DELETE SOON
+                                object[,] arr = new object[,] {
+                                    { "m" },
+                                    { "f" },
+                                    { "i" },
+                                    { "b" },
+                                    { "e" },
+                                    { "k" },
+                                    { "g" },
+                                    { "c" },
+                                    { "h" },
+                                    { "a" }
+                                };
+                                loans.QSort(arr, 0, arr.Length - 1);
+                                Console.Write(fmtIt.Display(arr));
+                                Console.ReadLine();
+                                
                                 quit = true;
                                 break;
                         }

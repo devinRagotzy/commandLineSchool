@@ -46,7 +46,7 @@ namespace RagotzyDevinFinalProject {
             String msg = Output.Blue().Bold().Text("Here is the list of all Loans") + EOL._
                 + Output.White().Underline().Text("Name".PadRight(18) + "Loan amount".PadLeft(9) + "Term".PadLeft(9)) + EOL._;
             for (int i = 0; i < arr.GetLength(0); i++) {
-                for (int j = 0; j < 3; j++) {
+                for (int j = 0; j < arr.GetLength(1); j++) {
                     // we need this ugly mess to space the colums correctly
                     if (j == 0) {
                         string temp = (string)arr[i, j];
