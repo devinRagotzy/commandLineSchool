@@ -5,11 +5,12 @@ using System.Collections.Generic;
  * 04/29/19
  * ***************************************************************************************
  *
- * BUSSINES POINT OF VIEW
- *  An app that allows a bank to keep track of customers with loans. It allows them to print
- *  all customers information, sorted by first or last name.  Calculation of total amount 
- *  and monthly payments as well as total interest earned for life of the loan.  All output
- *  is formatted and colored for easy reading.
+ * BUSINESS POINT OF VIEW
+ *  An app that allows a bank to keep track of customers with loans.  App opens with a menu
+ *  that allows user to choose between six options.  User search by loan amount to find names, 
+ *  they can choose print all customers information unsorted or sorted by first or last name. 
+ *  Calculation of total amount and monthly payments as well as total interest earned for life
+ *  of the loan.  All output is formatted and colored for easy reading.
  * ***************************************************************************************
  * 
  * CLASSROOM POINT OF VIEW
@@ -28,7 +29,7 @@ using System.Collections.Generic;
  *      selectedIndexInt -
  *          used to track users selection 
  *      CursorVisible - 
- *          since i want the menu to be used with arrow keys the cursor only shows up when typing
+ *          since I want the menu to be used with arrow keys the cursor only shows up when typing
  *          is required.
  *      ConsoleKey - 
  *          an enum of every key on a keyboard used in the switch statement to match the key
@@ -74,7 +75,7 @@ using System.Collections.Generic;
  *      Imported a package called Crayon to color the console more easily its main class, Output is
  *      how i interact with it. It uses chainable methods to add color or styles to a string with ascii 
  *      color codes. Using a sine wave and the sine func i was able to get rgb values to increment 
- *      and decriment in a uniform way so i could color the text output like a rainbow yay!! 
+ *      and decrement in a uniform way so i could color the text output like a rainbow yay!! 
 ******************************************************************************/
 namespace RagotzyDevinFinalProject {
     class Program {
@@ -142,14 +143,14 @@ namespace RagotzyDevinFinalProject {
                                 break;
                             // sort first name
                             case 2:
-                                loans.QSort(loans.LoanInfo, 0, loans.LoanInfo.GetLength(0) - 1);
+                                loans.QuickSort(loans.LoanInfo, 0, loans.LoanInfo.GetLength(0) - 1);
                                 // CHECK
                                 Console.Write(fmtIt.Display(loans.LoanInfo));
                                 Console.ReadLine();
                                 break;
                             // sort last name
                             case 3:
-                                loans.QSort(loans.LoanInfo, 0, loans.LoanInfo.GetLength(0) - 1, true);
+                                loans.QuickSortLast(loans.LoanInfo, 0, loans.LoanInfo.GetLength(0) - 1);
                                 Console.Write(fmtIt.Display(loans.LoanInfo));
                                 Console.ReadLine();
                                 break;
@@ -178,23 +179,6 @@ namespace RagotzyDevinFinalProject {
                                 Console.ReadLine();
                                 break;
                             default:
-                                // DELETE SOON
-                                object[,] arr = new object[,] {
-                                    { "m" },
-                                    { "f" },
-                                    { "i" },
-                                    { "b" },
-                                    { "e" },
-                                    { "k" },
-                                    { "g" },
-                                    { "c" },
-                                    { "h" },
-                                    { "a" }
-                                };
-                                loans.QSort(arr, 0, arr.Length - 1);
-                                Console.Write(fmtIt.Display(arr));
-                                Console.ReadLine();
-                                
                                 quit = true;
                                 break;
                         }

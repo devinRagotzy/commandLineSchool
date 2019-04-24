@@ -54,6 +54,7 @@ namespace RagotzyDevinFinalProject {
             return collected;
         }
 
+        // since we have to loop for each array abstract out the swap
         private void Swap(object[,] arr, int idx, int j) {
             int innerSize = arr.GetLength(1);
 
@@ -83,33 +84,33 @@ namespace RagotzyDevinFinalProject {
                 if (firstStr.CompareTo(pivot) < 0) {
                     idx++;
                     
-                    Swap(arr, idx, j);
+                    this.Swap(arr, idx, j);
                 }
             }
-            Swap(arr, idx + 1, right);
+            this.Swap(arr, idx + 1, right);
             return idx + 1;
         }
 
         // sorts for first name
-        public void QSort(object[,] arr, int left, int right) {
+        public void QuickSort(object[,] arr, int left, int right) {
             if (left < right) {
                 // move element by element moving pivot by recursivly calling QSort
                 // the pivot is swapped with all elements smaller 
                 // than it, moved to the left of the array
                 int pivot = this.Partition(arr, left, right);
                 // recursivly checks elements to the left of pivot
-                this.QSort(arr, left, pivot - 1);
+                this.QuickSort(arr, left, pivot - 1);
                 // guarantees end of recursion
-                this.QSort(arr, pivot + 1, right);
+                this.QuickSort(arr, pivot + 1, right);
             }
         }
 
         // overide for last name sort split and Q sort
-        private int SplitQSort(object[,] arr, int left, int right, bool lastName) {
-            string pivot = arr[right, 0].ToString().Split(' ')[1].Trim();
+        private int PartitionLast(object[,] arr, int left, int right) {
+            string pivot = arr[right, 0].ToString().Split(' ')[1];
             int idx = left - 1;
             for (int j = left; j < arr.GetLength(0) - 1; j++) {
-                string firstStr = arr[j, 0].ToString();
+                string firstStr = arr[j, 0].ToString().Split(' ')[1];
                 if (firstStr.CompareTo(pivot) < 0) {
                     idx++;
                     Swap(arr, idx, j);
@@ -119,16 +120,16 @@ namespace RagotzyDevinFinalProject {
             return idx + 1;
         }
 
-        public void QSort(object[,] arr, int left, int right, bool lastName) {
+        public void QuickSortLast(object[,] arr, int left, int right) {
             if (left < right) {
                 // move element by element moving pivot by recursivly calling QSort
                 // the splitInx is the pivot and is swapped with all elements larger 
                 // than it moved to the left of the array
-                int pivot = this.Partition(arr, left, right);
+                int pivot = this.PartitionLast(arr, left, right);
                 // recursivly checks elements to the left
-                this.QSort(arr, left, pivot - 1);
+                this.QuickSortLast(arr, left, pivot - 1);
                 // recursivly take large 'half' and swap elements
-                this.QSort(arr, pivot + 1, right);
+                this.QuickSortLast(arr, pivot + 1, right);
             }
         }
     }

@@ -87,17 +87,13 @@ namespace RagotzyDevinFinalProject {
                     + pay.TotalAmount.ToString("c").PadLeft(14) + pay.Rate.ToString("##%").PadLeft(18)) + EOL._
                     + "Month Number" + "Payment".PadLeft(11) + "Amount Left".PadLeft(14) + EOL._;
             int amtLeft = (int)pay.TotalAmount;
-            for (int i = 0; i < (int)pay.NumPayments; i++)
-            {
-                if (i+1 == pay.NumPayments)
-                {
-                    amtLeft -= (pay.MonthlyPayment + pay.AmountLeft);
-                    msg += $"month {i + 1}:".PadRight(14) + $"{(pay.MonthlyPayment + pay.AmountLeft).ToString("c")}"
-                        + $"{amtLeft.ToString("c")}   {pay.AmountLeft.ToString()}".PadLeft(14) + EOL._;
-                }
-                else
-                {
-                    amtLeft -= pay.MonthlyPayment;
+            for (int i = 0; i < (int)pay.NumPayments; i++) {
+                amtLeft -= (pay.MonthlyPayment + pay.AmountLeft);
+                // if last payment
+                if (i+1 == pay.NumPayments) {
+                    msg += $"month {i + 1}:".PadRight(16) + $"{(pay.MonthlyPayment + pay.AmountLeft).ToString("c")}"
+                        + $"{amtLeft.ToString("c")}".PadLeft(14) + EOL._;
+                } else {
                     msg += $"month {i + 1}:".PadRight(16) + $"{pay.MonthlyPayment.ToString("c")}"
                         + $"{amtLeft.ToString("c")}".PadLeft(14) + EOL._;
                 }
