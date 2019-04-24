@@ -53,12 +53,14 @@ using System.Collections.Generic;
  *              keeps track of the selected index visualy, the index is passed to it but it is responsible
  *              for moving the colored line of text from index to index of the options array
  *          Display -
- *              an overloaded method with signatures object[,], List<string>, and object[,] object[,]
+ *              an overloaded method with signatures object[,], List<string>, and Payment a data class
  *              they all return a formated colored string
  *          GenerateRGBValue -
  *              using a sine wave and shifting R by 0, G by 2 and B by 4 you get a even changing of
  *              each value when run in a for loop (the index is a param) the resulting value has to 
  *              be normalized out to a number between 0 and 256
+ *      Payment -
+ *          payment has no methods it only purpose is to transfer data in a type safe way from class to class
  *      LoanCalc -
  *          BSearch -
  *              binary search splits the array in half until you find your match, does not work if unsorted
@@ -72,15 +74,15 @@ using System.Collections.Generic;
  *          Search - 
  *              just a single for loop to find if there is a matching loan amount and adds it to a list
  *  Extras:
- *      Imported a package called Crayon to color the console more easily its main class, Output is
- *      how i interact with it. It uses chainable methods to add color or styles to a string with ascii 
- *      color codes. Using a sine wave and the sine func i was able to get rgb values to increment 
- *      and decrement in a uniform way so i could color the text output like a rainbow yay!! 
+ *      Imported a package called Crayon to color the console more easily. Its main class, Output is
+ *      how to interact with it all methods return a string. It uses chainable methods to add color or 
+ *      styles to a string with ascii color codes. Using a sine wave and the sine func I was able to 
+ *      get rgb values to increment and decrement in a uniform way so I could color the text output like a rainbow yay!! 
 ******************************************************************************/
 namespace RagotzyDevinFinalProject {
     class Program {
-        static void Main(string[] args) {
-
+        static void Main() {
+            
             bool quit = false;
             int selectedIndexInt = 0;
 
