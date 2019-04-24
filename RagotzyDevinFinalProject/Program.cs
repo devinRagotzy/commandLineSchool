@@ -163,7 +163,7 @@ namespace RagotzyDevinFinalProject {
                                 string rateStr = Console.ReadLine();
                                 try {
                                     Console.Clear();
-                                    decimal rateDec = decimal.Parse(rateStr);
+                                    decimal rateDec = decimal.Parse(rateStr)/100;
                                     Payment payment = loanCalc.CalcPaymentInfo(person, rateDec);
                                     if (payment == null) {
                                         Console.WriteLine(fmtIt.Error("No customer found press enter"));

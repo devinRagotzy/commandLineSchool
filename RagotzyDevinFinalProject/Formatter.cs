@@ -88,13 +88,15 @@ namespace RagotzyDevinFinalProject {
                     + "Month Number" + "Payment".PadLeft(11) + "Amount Left".PadLeft(14) + EOL._;
             int amtLeft = (int)pay.TotalAmount;
             for (int i = 0; i < (int)pay.NumPayments; i++) {
-                amtLeft -= (pay.MonthlyPayment + pay.AmountLeft);
+                amtLeft -= pay.MonthlyPayment;
+                (byte r, byte g, byte b) = this.GenerateRGBvalue(i);
                 // if last payment
                 if (i+1 == pay.NumPayments) {
-                    msg += $"month {i + 1}:".PadRight(16) + $"{(pay.MonthlyPayment + pay.AmountLeft).ToString("c")}"
+                    amtLeft -= pay.AmountLeft;
+                    msg += Output.FromRgb(r, g, b).Text($"month {i + 1}:".PadRight(16)) + $"{(pay.MonthlyPayment + pay.AmountLeft).ToString("c")}"
                         + $"{amtLeft.ToString("c")}".PadLeft(14) + EOL._;
                 } else {
-                    msg += $"month {i + 1}:".PadRight(16) + $"{pay.MonthlyPayment.ToString("c")}"
+                    msg += Output.FromRgb(r, g, b).Text($"month {i + 1}:".PadRight(16)) + $"{pay.MonthlyPayment.ToString("c")}"
                         + $"{amtLeft.ToString("c")}".PadLeft(14) + EOL._;
                 }
             }
